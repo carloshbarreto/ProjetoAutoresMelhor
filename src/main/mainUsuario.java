@@ -1,3 +1,10 @@
+/**
+ * Classe principal do programa
+ * criado em 10/11/2020
+ * @author Carlos, Janaina, Lucas, Mayara, Priscila e Sandra.
+ */
+
+
 package main;
 
 import view.LoginGUI;

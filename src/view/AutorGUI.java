@@ -1,3 +1,10 @@
+/**
+ * Classe para representar um cadastro de autores
+ * criado em 10/11/2020
+ * @author Carlos, Janaina, Lucas, Mayara, Priscila e Sandra.
+ */
+
+
 package view;
 
 import java.awt.BorderLayout;
@@ -7,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -20,10 +29,33 @@ public class AutorGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField textCodigo;
 	private JTextField textNome;
-	private JTextField textField;
-
+	private JTextField textEmail;
+	private JLabel lblCodigo;
+	private JLabel lblNome;
+	private JLabel lblEmail;
+	private JLabel lblTipo;
+	private JComboBox comboBox;
+	private JButton btnEnviar;
+	private JButton btnLimpar;
+	
+	/**
+	 * Construtor completo
+	 * 
+	 * @param contentPan
+	 * @param textCodigo
+	 * @param textNome
+	 * @param textEmail
+	 * @param lblCodigo
+	 * @param lblNome
+	 * @param lblEmail
+	 * @param lblTipo
+	 * @param comboBox
+	 * @param btnEnviar
+	 * @param btnLimpar
+	 */
 	
 	public AutorGUI() {
+		Handler ouvinte = new Handler();
 		setTitle("CADASTRO DE AUTORES");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 326, 417);
@@ -32,7 +64,7 @@ public class AutorGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblCodigo = new JLabel("C\u00D3DIGO");
+		lblCodigo = new JLabel("C\u00D3DIGO");
 		lblCodigo.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblCodigo.setBounds(52, 25, 70, 21);
 		contentPane.add(lblCodigo);
@@ -42,7 +74,7 @@ public class AutorGUI extends JFrame {
 		contentPane.add(textCodigo);
 		textCodigo.setColumns(10);
 		
-		JLabel lblNome = new JLabel("NOME");
+		lblNome = new JLabel("NOME");
 		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNome.setBounds(52, 98, 70, 21);
 		contentPane.add(lblNome);
@@ -52,38 +84,81 @@ public class AutorGUI extends JFrame {
 		textNome.setBounds(52, 130, 177, 30);
 		contentPane.add(textNome);
 		
-		JLabel lblEmail = new JLabel("EMAIL");
+		lblEmail = new JLabel("EMAIL");
 		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblEmail.setBounds(52, 173, 70, 21);
 		contentPane.add(lblEmail);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(52, 205, 177, 30);
-		contentPane.add(textField);
+		textEmail = new JTextField();
+		textEmail.setColumns(10);
+		textEmail.setBounds(52, 205, 177, 30);
+		contentPane.add(textEmail);
 		
-		JLabel lblTipo = new JLabel("TIPO DE ESCRITA");
+		lblTipo = new JLabel("TIPO DE ESCRITA");
 		lblTipo.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblTipo.setBounds(52, 248, 115, 21);
 		contentPane.add(lblTipo);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"LITERATURA INFANTIL", "LITERATURA JUVENIL", "LITERATURA ADULTO"}));
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"SELECIONE UM ITEM", "LITERATURA INFANTIL", "LITERATURA JUVENIL", "LITERATURA ADULTO"}));
 		comboBox.setBounds(52, 280, 177, 22);
 		contentPane.add(comboBox);
 		
-		JButton btnEnviar = new JButton("ENVIAR");
+		btnEnviar = new JButton("ENVIAR");
 		btnEnviar.setBounds(151, 331, 89, 23);
 		contentPane.add(btnEnviar);
+		btnEnviar.addActionListener(ouvinte);
 		
-		JButton btnLimpar = new JButton("LIMPAR");
-		btnLimpar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnLimpar = new JButton("LIMPAR");					
 		btnLimpar.setBounds(52, 331, 89, 23);
 		contentPane.add(btnLimpar);
+		btnLimpar.addActionListener(ouvinte);
 		
 		setVisible(true);
 	}
+	/**
+	 * Método para limpar campos 
+	 * 
+	 */
+		public void limpar() {
+			textCodigo.setText("");
+			textNome.setText("");
+			textEmail.setText("");
+			comboBox.setSelectedIndex(0);
+		}
+		
+		/**
+		 * Classe interna para tratamento de evento de botões 
+		 * 
+		 *
+		 */
+		public class Handler implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==btnLimpar) {
+					limpar();
+				}
+				else {
+					if(e.getSource()==btnEnviar) {
+						String codigo = textCodigo.getText();
+						String nome = textNome.getText();
+						String email = textEmail.getText();
+						String tipoEscrita = comboBox.getSelectedItem().toString();
+						if((codigo.equals(""))|| (nome.equals(""))|| (email.equals(""))||(tipoEscrita.equals("SELECIONE UM ITEM"))) {
+							JOptionPane.showMessageDialog(null, "Favor preencher todos os campos!", "ATENÇÃO!!", 2, null);
+						}
+						else {
+							if((!codigo.equals("")) && (!nome.equals("")) && (!email.equals(""))&&(!tipoEscrita.equals("SELECIONE UM ITEM"))) {
+								JOptionPane.showMessageDialog(null, "Dados cadastrados com sucesso!", "SUCESSO!!", 1, null);
+							}
+						}
+					}
+				}
+				
+			}
+			
+		}
+	
+	
 }

@@ -17,6 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
+/**
+* Classe para representar o Loguin do Usuário
+* criado em 10/11/2020
+* @author Carlos, Janaina, Lucas, Mayara, Priscila e Sandra.
+*/
 public class LoginGUI extends JFrame {
 
 	private JPanel contentPane;
@@ -28,7 +33,17 @@ public class LoginGUI extends JFrame {
 	private JButton btnLimpar;
 	
 
-	
+	/**
+	 * Construtor completo
+	 * 
+	 * @param contentPane
+	 * @param textLogin
+	 * @param txtSenha
+	 * @param lblLogin
+	 * @param lblSenha
+	 * @param btnEntrar
+	 * @param btnLimpar
+	 */
 	public LoginGUI() {
 		
 		Handler ouvinte = new Handler();
@@ -74,11 +89,20 @@ public class LoginGUI extends JFrame {
 		setVisible(true);
 	}
 	
+	/**
+	 * Método para limpar campos 
+	 * 
+	 */
 	public void limpar() {
 		textLogin.setText("");
 		txtSenha.setText("");
 	}
-	
+		
+	/**
+	 * Classe interna para tratamento de evento de botões 
+	 * 
+	 *
+	 */
 	public class Handler implements ActionListener{
 
 		@Override
