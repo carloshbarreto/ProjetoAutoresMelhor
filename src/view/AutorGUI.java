@@ -13,6 +13,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.controllerAutor;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -149,8 +152,15 @@ public class AutorGUI extends JFrame {
 							JOptionPane.showMessageDialog(null, "Favor preencher todos os campos!", "ATENÇÃO!!", 2, null);
 						}
 						else {
-							if((!codigo.equals("")) && (!nome.equals("")) && (!email.equals(""))&&(!tipoEscrita.equals("SELECIONE UM ITEM"))) {
+							controllerAutor ca = new controllerAutor();
+							
+							if(ca.cadastrar(codigo, nome, email, tipoEscrita)==1) {
 								JOptionPane.showMessageDialog(null, "Dados cadastrados com sucesso!", "SUCESSO!!", 1, null);
+								limpar();
+								
+							}
+							else {
+								JOptionPane.showMessageDialog(null, "Não foi possível cadastrar!", "ATENÇÃO!!", 2, null);
 							}
 						}
 					}
