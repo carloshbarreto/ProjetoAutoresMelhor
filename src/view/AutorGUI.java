@@ -13,8 +13,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controller.controllerAutor;
+import model.modeloAutor;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,8 +26,13 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import java.awt.ScrollPane;
+import javax.swing.JScrollPane;
 
 public class AutorGUI extends JFrame {
 
@@ -40,6 +47,10 @@ public class AutorGUI extends JFrame {
 	private JComboBox comboBox;
 	private JButton btnEnviar;
 	private JButton btnLimpar;
+	private JTable tabelaAutores;
+	private JScrollPane scrollPane;
+	private DefaultTableModel modelo;
+	private JSeparator separator;
 	
 	/**
 	 * Construtor completo
@@ -61,11 +72,12 @@ public class AutorGUI extends JFrame {
 		Handler ouvinte = new Handler();
 		setTitle("CADASTRO DE AUTORES");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 326, 417);
+		setBounds(100, 100, 326, 602);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 		
 		lblCodigo = new JLabel("C\u00D3DIGO");
 		lblCodigo.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -117,6 +129,18 @@ public class AutorGUI extends JFrame {
 		contentPane.add(btnLimpar);
 		btnLimpar.addActionListener(ouvinte);
 		
+		separator = new JSeparator();
+		separator.setBounds(0, 397, 310, 2);
+		contentPane.add(separator);
+		
+		definirJTable();
+		
+		
+		scrollPane = new JScrollPane(tabelaAutores);
+		scrollPane.setBounds(10, 410, 290, 142);
+		contentPane.add(scrollPane);
+		
+		
 		setVisible(true);
 	}
 	/**
@@ -129,6 +153,27 @@ public class AutorGUI extends JFrame {
 			textEmail.setText("");
 			comboBox.setSelectedIndex(0);
 		}
+		
+		
+		public void definirJTable() {
+			modelo = new DefaultTableModel();
+			modelo.addColumn("Código");
+			modelo.addColumn("Nome");
+			modelo.addColumn("E-mail");
+			modelo.addColumn("Tipo de Escrita");
+			tabelaAutores = new JTable(modelo);
+		}
+		
+		
+		public void adicionarAutor(List<modeloAutor> lista) {
+			modelo.setNumRows(0);
+			
+				for(modeloAutor user: lista) {
+					Object[] linha = {user.getCodigo(), user.getNome(), user.getEmail(), user.getTipoEscrita()};
+					modelo.addRow(linha);
+					}
+		}
+		
 		
 		/**
 		 * Classe interna para tratamento de evento de botões 
@@ -157,6 +202,8 @@ public class AutorGUI extends JFrame {
 							if(ca.cadastrar(codigo, nome, email, tipoEscrita)==1) {
 								JOptionPane.showMessageDialog(null, "Dados cadastrados com sucesso!", "SUCESSO!!", 1, null);
 								limpar();
+								scrollPane.setVisible(true);
+								adicionarAutor(ca.consultar());
 								
 							}
 							else {
@@ -169,6 +216,4 @@ public class AutorGUI extends JFrame {
 			}
 			
 		}
-	
-	
 }

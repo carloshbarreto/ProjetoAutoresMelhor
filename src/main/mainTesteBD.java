@@ -1,9 +1,7 @@
 package main;
 
 import java.sql.Connection;
-
 import javax.swing.JOptionPane;
-
 import connection.ConnectionFactory;
 
 public class mainTesteBD {
@@ -13,7 +11,7 @@ public class mainTesteBD {
 		Connection con = null;
 		con = ConnectionFactory.getConnection();
 		if(con!=null) {
-			JOptionPane.showMessageDialog(null, "Sucesso", "Sucesso", 1);
+			JOptionPane.showMessageDialog(null, "Sucesso na conexão!", "Sucesso", 1);
 		}
 	}
 
